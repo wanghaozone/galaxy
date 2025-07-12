@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy丨狂野飙车·集结</title>
+    <link rel="icon" href="https://tools.r-r.monster/pic/favicon.ico" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* 星空背景效果 */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite ease-in-out;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 顶部导航栏 */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-container img {
+            height: 60px;
+            width: auto;
+            filter: drop-shadow(0 0 8px rgba(94, 156, 255, 0.7));
+        }
+        
+        .logo-text h1 {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(to right, #ff8a00, #da1b60, #4a90e2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        
+        .logo-text p {
+            font-size: 14px;
+            color: #aaa;
+            letter-spacing: 2px;
+        }
+        
+        /* 主要内容网格 */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .section {
+            background: rgba(10, 15, 35, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(94, 156, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(94, 156, 255, 0.4);
+            border-color: rgba(94, 156, 255, 0.5);
+        }
+        
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(94, 156, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .link-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        
+        .link-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: #e0e0ff;
+        }
+        
+        .link-item:hover {
+            background: rgba(94, 156, 255, 0.15);
+            transform: translateX(5px);
+        }
+        
+        .link-icon {
+            font-size: 20px;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .link-text {
+            flex: 1;
+        }
+        
+        .link-text h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .link-text p {
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        /* 旋转动画装饰 */
+        .galaxy-circle {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(94, 156, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            top: 10%;
+            right: 5%;
+            z-index: -1;
+            animation: rotate 30s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 页脚样式 */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+            position: relative;
+        }
+        
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .footer-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #e0e0ff;
+        }
+        
+        .qrcode-container {
+            display: inline-block;
+            background-color: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            margin: 20px 0;
+        }
+        
+        .qrcode-container img {
+            width: 160px;
+            height: 160px;
+        }
+        
+        .copyright {
+            color: #888;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .logo-container {
+                justify-content: center;
+            }
+            
+            .galaxy-circle {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 星空背景 -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- 旋转银河装饰 -->
+    <div class="galaxy-circle"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="https://tools.r-r.monster/pic/galaxylogobai.png" alt="Galaxy Club Logo">
+                <div class="logo-text">
+                    <h1>Galaxy Club</h1>
+                    <p>ASPHALT LEGENDS UNITE</p>
+                </div>
+            </div>
+        </header>
+        
+        <div class="content-grid">
+            <!-- 游戏助手区域 -->
+            <div class="section">
+                <h2 class="section-title">🛠️ 游戏助手</h2>
+                <div class="link-grid">
+                    <a href="http://galaxy.910616.xyz/#/md/Galaxy俱乐部" class="link-item">
+                        <span class="link-icon">👥</span>
+                        <div class="link-text">
+                            <h3>加入Galaxy俱乐部</h3>
+                            <p>解锁专属车队DLC</p>
+                        </div>
+                    </a>
+                    <a href="http://galaxy.910616.xyz/#/md/教程合集页" class="link-item">
+                        <span class="link-icon">🏫</span>
+                        <div class="link-text">
+                            <h3>教程攻略</h3>
+                            <p>掌握集结技巧</p>
+                        </div>
+                    </a>
+                    <a href="http://galaxy.910616.xyz/#/md/赛季预告" class="link-item">
+                        <span class="link-icon">📅</span>
+                        <div class="link-text">
+                            <h3>赛季预告</h3>
+                            <p>赛季新车、活动、更新日志预览</p>
+                        </div>
+                    </a>
+                    <a href="http://galaxy.910616.xyz/#/md/赛事数据" class="link-item">
+                        <span class="link-icon">🏴</span>
+                        <div class="link-text">
+                            <h3>赛事数据</h3>
+                            <p>特赛数据参考</p>
+                        </div>
+                    </a>
+                    <a href="https://a9.walterbright.cc/#/" class="link-item">
+                        <span class="link-icon">🔍</span>
+                        <div class="link-text">
+                            <h3>狂飙小助手</h3>
+                            <p>车辆、地图、特赛信息查询</p>
+                        </div>
+                    </a>
+                    <a href="https://laptime.edgeone.app" class="link-item">
+                        <span class="link-icon">🧮</span>
+                        <div class="link-text">
+                            <h3>圈速计算器</h3>
+                            <p>预测各星级参考圈速</p>
+                        </div>
+                    </a>
+                    <a href="https://aluauto.edgeone.app" class="link-item">
+                        <span class="link-icon">🤖</span>
+                        <div class="link-text">
+                            <h3>挂机计算器</h3>
+                            <p>合理分配挂机寻车、多人次数</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 竞技系统区域 -->
+            <div class="section">
+                <h2 class="section-title">🏆 竞技系统</h2>
+                <div class="link-grid">
+                    <a href="https://alugauntlet.edgeone.app" class="link-item">
+                        <span class="link-icon">🏁</span>
+                        <div class="link-text">
+                            <h3>擂台用车推荐</h3>
+                            <p>仅供参考 赢取Devil16！</p>
+                        </div>
+                    </a>
+                    <a href="http://galaxy.910616.xyz/#/md/AsphaltUnite擂台跑法视频" class="link-item">
+                        <span class="link-icon">📺</span>
+                        <div class="link-text">
+                            <h3>擂台跑法</h3>
+                            <p>擂台全地图跑法参考</p>
+                        </div>
+                    </a>
+                    <a href="https://mei-a9.info/events" class="link-item">
+                        <span class="link-icon">🥇</span>
+                        <div class="link-text">
+                            <h3>赛事排行榜</h3>
+                            <p>查看各赛事排行榜挡位</p>
+                        </div>
+                    </a>
+                    <a href="https://alurank.edgeone.app/" class="link-item">
+                        <span class="link-icon">📈</span>
+                        <div class="link-text">
+                            <h3>排行榜生成</h3>
+                            <p>生成排行榜档位名次</p>
+                        </div>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/u/4/d/1O10MLoOS6LRw-u0UpCsO9gBhcNHIX1Wjda8MS8LPJC0/htmlview" class="link-item">
+                        <span class="link-icon">📚️</span>
+                        <div class="link-text">
+                            <h3>赛事历史记录</h3>
+                            <p>历史赛季、活动数据</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 福利中心区域 -->
+            <div class="section">
+                <h2 class="section-title">💎 福利中心</h2>
+                <div class="link-grid">
+                    <a href="https://www.gameloft.com/redeem/asphalt-legends-unite" class="link-item">
+                        <span class="link-icon">🎁</span>
+                        <div class="link-text">
+                            <h3>官方兑换码</h3>
+                            <p>输入兑换码领取豪华礼包</p>
+                        </div>
+                    </a>
+                    <a href="/lucky-wheel" class="link-item">
+                        <span class="link-icon">🎰</span>
+                        <div class="link-text">
+                            <h3>幸运轮盘</h3>
+                            <p>免费抽传说引擎（笑死）</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 社交引擎区域 -->
+            <div class="section">
+                <h2 class="section-title">🌐 社交引擎</h2>
+                <div class="link-grid">
+                    <a href="https://asphaltlegendsunite.com/" class="link-item">
+                        <span class="link-icon">🌎</span>
+                        <div class="link-text">
+                            <h3>官方网站</h3>
+                            <p>加入百万飙车党</p>
+                        </div>
+                    </a>
+                    <a href="https://discord.com/channels/464007189741305856/585059349018312705" class="link-item">
+                        <span class="link-icon">💬</span>
+                        <div class="link-text">
+                            <h3>官方社区</h3>
+                            <p>玩家交流</p>
+                        </div>
+                    </a>
+                    <a href="https://gameloft.helpshift.com/hc/en/15-asphalt-legends-unite/" class="link-item">
+                        <span class="link-icon">📢</span>
+                        <div class="link-text">
+                            <h3>客服中心</h3>
+                            <p>24小时极速不响应</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="footer-content">
+                <h2 class="footer-title">🌃 当转速表突破红区，才能看见真正的赛道</h2>
+                <div class="qrcode-container">
+                    <img src="https://tools.r-r.monster/pic/QRcode.png" alt="加入QQ群二维码">
+                </div>
+                <p>扫描二维码加入Galaxy俱乐部🐧群</p>
+                <div class="copyright">
+                    © 2025 Galaxy Club. All rights reserved.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 创建动态星空背景
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starsCount = 200;
+            
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // 随机位置
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                // 随机大小
+                const size = Math.random() * 3 + 1;
+                
+                // 随机动画延迟
+                const delay = Math.random() * 5;
+                
+                star.style.left = `${posX}%`;
+                star.style.top = `${posY}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDelay = `${delay}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // 页面加载完成后创建星星
+        window.addEventListener('DOMContentLoaded', createStars);
+        
+        // 添加鼠标移动的光束效果
+        document.body.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            // 创建光束元素
+            const beam = document.createElement('div');
+            beam.style.position = 'fixed';
+            beam.style.left = `${x}px`;
+            beam.style.top = `${y}px`;
+            beam.style.width = '100px';
+            beam.style.height = '100px';
+            beam.style.background = 'radial-gradient(circle, rgba(94, 156, 255, 0.3) 0%, transparent 70%)';
+            beam.style.borderRadius = '50%';
+            beam.style.pointerEvents = 'none';
+            beam.style.zIndex = '-1';
+            beam.style.transform = 'translate(-50%, -50%)';
+            beam.style.animation = 'fadeBeam 1s forwards';
+            
+            document.body.appendChild(beam);
+            
+            // 移除光束
+            setTimeout(() => {
+                beam.remove();
+            }, 1000);
+        });
+        
+        // 添加光束动画到样式表
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeBeam {
+                0% { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
+                100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
